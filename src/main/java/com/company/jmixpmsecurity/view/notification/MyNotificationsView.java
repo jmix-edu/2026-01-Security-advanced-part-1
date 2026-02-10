@@ -5,6 +5,7 @@ import com.company.jmixpmsecurity.entity.Notification;
 import com.company.jmixpmsecurity.view.main.MainView;
 import com.vaadin.flow.router.Route;
 import io.jmix.core.DataManager;
+import io.jmix.core.UnconstrainedDataManager;
 import io.jmix.flowui.component.grid.DataGrid;
 import io.jmix.flowui.kit.action.ActionPerformedEvent;
 import io.jmix.flowui.model.CollectionLoader;
@@ -21,7 +22,7 @@ public class MyNotificationsView extends StandardView {
     private CollectionLoader<Notification> notificationsDl;
 
     @Autowired
-    private DataManager dataManager;
+    private UnconstrainedDataManager unconstrainedDataManager;
 
     @Subscribe("notificationsDataGrid.markAsRead")
     public void onNotificationsTableMarkAsRead(ActionPerformedEvent event) {
@@ -34,7 +35,7 @@ public class MyNotificationsView extends StandardView {
         // set isRead
         item.setIsRead(true);
         // save changes
-        dataManager.save(item);
+        unconstrainedDataManager.save(item);
 
         // reload the table
         notificationsDl.load();

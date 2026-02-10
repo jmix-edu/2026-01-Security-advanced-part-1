@@ -6,6 +6,7 @@ import io.jmix.security.model.EntityPolicyAction;
 import io.jmix.security.role.annotation.EntityAttributePolicy;
 import io.jmix.security.role.annotation.EntityPolicy;
 import io.jmix.security.role.annotation.ResourceRole;
+import io.jmix.security.role.annotation.SpecificPolicy;
 import io.jmix.securityflowui.role.annotation.MenuPolicy;
 import io.jmix.securityflowui.role.annotation.ViewPolicy;
 
@@ -23,7 +24,7 @@ public interface ProjectManagementRole {
     @EntityPolicy(entityClass = Document.class, actions = EntityPolicyAction.ALL)
     void document();
 
-    @EntityAttributePolicy(entityClass = User.class, attributes = {"firstName", "lastName", "email"}, action = EntityAttributePolicyAction.MODIFY)
+    @EntityAttributePolicy(entityClass = User.class, attributes = {"lastName", "email", "firstName"}, action = EntityAttributePolicyAction.MODIFY)
     @EntityAttributePolicy(entityClass = User.class, attributes = {"id", "version", "username", "password", "active"}, action = EntityAttributePolicyAction.VIEW)
     @EntityPolicy(entityClass = User.class, actions = {EntityPolicyAction.READ, EntityPolicyAction.UPDATE})
     void user();
@@ -41,4 +42,7 @@ public interface ProjectManagementRole {
     @EntityAttributePolicy(entityClass = TimeEntry.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
     @EntityPolicy(entityClass = TimeEntry.class, actions = EntityPolicyAction.ALL)
     void timeEntry();
+
+    @SpecificPolicy(resources = "jmix.pm.project.archive")
+    void specific();
 }
