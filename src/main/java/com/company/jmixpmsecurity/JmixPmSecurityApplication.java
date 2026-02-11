@@ -1,10 +1,12 @@
 package com.company.jmixpmsecurity;
 
+import com.company.jmixpmsecurity.app.RegistrationCleaner;
 import com.google.common.base.Strings;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.theme.Theme;
+import org.quartz.*;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -53,4 +55,23 @@ public class JmixPmSecurityApplication implements AppShellConfigurator {
                 + environment.getProperty("local.server.port")
                 + Strings.nullToEmpty(environment.getProperty("server.servlet.context-path")));
     }
+
+    @Bean
+    JobDetail registrationCleaningJob() {
+        return JobBuilder.newJob(RegistrationCleaner.class)
+                .withIdentity("registrationCleaning")
+                .storeDurably()
+                .build();
+    }
+
+    @Bean
+    Trigger registrationCleaningTrigger() {
+        return TriggerBuilder.newTrigger()
+                .withIdentity("registrationCleaningTrigger")
+                .forJob(registrationCleaningJob())
+                .startNow()
+                .withSchedule(CronScheduleBuilder.cronSchedule("0 * * * * ?"))
+                .build();
+    }
+
 }

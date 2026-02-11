@@ -26,7 +26,7 @@ public interface DeveloperRowLevelRole {
     void restrictTimeEntries();
 
     @PredicateRowLevelPolicy(entityClass = TimeEntry.class,
-            actions = {RowLevelPolicyAction.CREATE, RowLevelPolicyAction.UPDATE, RowLevelPolicyAction.DELETE}
+            actions = {RowLevelPolicyAction.UPDATE, RowLevelPolicyAction.DELETE}
     )
     default RowLevelBiPredicate<TimeEntry, ApplicationContext> allowOnlyManagerUpdateOrDeleteProject() {
         return (entry, applicationContext) -> {

@@ -6,7 +6,7 @@ import io.jmix.flowui.app.main.StandardMainView;
 import io.jmix.flowui.view.ViewController;
 import io.jmix.flowui.view.ViewDescriptor;
 
-@AnonymousAllowed
+//@AnonymousAllowed
 @Route("")
 @ViewController(id = "MainView")
 @ViewDescriptor(path = "main-view.xml")
